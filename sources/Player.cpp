@@ -1,9 +1,9 @@
 #include "Player.hpp"
 
 namespace pandemic
-{
-        // This is an utility function which checks if the player have five cards from the given color
-        bool Player::five_cards(Color color)
+{ // TODO: fix space
+        // This is an utility function which checks if the player have 'n' cards from the given color
+        bool Player::count_cards(Color color, int num_of_cards)
         {
                 bool ans = false;
                 // clears the set
@@ -12,7 +12,7 @@ namespace pandemic
                 for (const auto &card : cards)
                 {
                         // found five cards from the same color
-                        if (cards_in_color.size() == 5)
+                        if (cards_in_color.size() == num_of_cards)
                         {
                                 ans = true;
                                 break;
@@ -26,10 +26,30 @@ namespace pandemic
                 return ans;
         }
 
-        // This is an utility function which discards five cards of the player from the given color
-        void Player::discard_five()
+        // This is an utility function which checks if the player have 'n' cards
+        bool Player::count_cards(int num_of_cards)
         {
-                // iterates through all the five cards form the same color that have benn found
+                bool ans = false;
+                // clears the set
+                cards_in_color.clear();
+                // iterates through all the cards
+                for (const auto &card : cards)
+                {
+                        // found five cards
+                        if (cards_in_color.size() == num_of_cards)
+                        {
+                                ans = true;
+                                break;
+                        }
+                        cards_in_color.insert(card);
+                }
+                return ans;
+        }
+
+        // This is an utility function which discards 'n' cards of the player from the given color
+        void Player::discard_cards()
+        {
+                // iterates through all the 'n' cards form the same color that have benn found
                 for (const auto &card : cards_in_color)
                 {
                         // discards the card
@@ -150,12 +170,12 @@ namespace pandemic
                         if (board.get_cures().count(disease_color) == 0)
                         {
                                 // the player has five cards in the color of the given disease
-                                if (five_cards(disease_color))
+                                if (count_cards(disease_color, 5))
                                 {
                                         // adds a cure to this given disease
                                         board.get_cures().insert(disease_color);
                                         // discard the five cards from the given color
-                                        discard_five();
+                                        discard_cards();
                                 }
                                 else
                                 {
@@ -171,8 +191,12 @@ namespace pandemic
         }
 
         // This function reduces the level of illness in the current city by one
-        Player &Player::treat(City city)
+        Player &Player::treat(City c)
         {
+                if (city != c)
+                {
+                        throw invalid_argument("Your card is[" + c + "], but you are at [" + city + "]");
+                }
                 Board board;
                 // the given city is healty
                 if (board.get_illness_level().at(city) == 0)

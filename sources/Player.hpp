@@ -14,10 +14,12 @@ namespace pandemic
         unordered_set<City> cards;
         unordered_set<City> cards_in_color;
 
-        // This is an utility function which checks if the player have five cards from the given color
-        bool five_cards(Color color);
-        // This is an utility function which discards five cards of the player from the given color
-        void discard_five();
+        // This is an utility function which checks if the player have 'n' cards from the given color
+        bool count_cards(Color color, int num_of_cards);
+        // This is an utility function which checks if the player have 'n' cards 
+        bool count_cards(int num_of_cards);
+        // This is an utility function which discards 'n' cards of the player from the given color
+        void discard_cards();
 
     public:
         // Constructor

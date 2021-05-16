@@ -6,9 +6,8 @@ namespace pandemic
 {
     class Virologist : public Player
     {
-        private:
-
-        public: 
-        Virologist(Board board, City city) : Player(board, city){};
+    public:
+        Virologist(Board &board, City &&city) : Player(board, city){};
+        Player &treat(City city);
     };
 }

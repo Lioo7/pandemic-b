@@ -6,9 +6,9 @@ namespace pandemic
 {
     class Scientist : public Player
     {
-        private:
-
-        public: 
-        Scientist(Board board, City city, int amount) : Player(board, city){};
+        int num; // TODO
+    public:
+        Scientist(Board &board, City &city, int n) : Player(board, city, "Scientist"), num(n){};
+        Player &discover_cure(Color disease_color);
     };
 }

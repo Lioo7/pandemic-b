@@ -6,9 +6,8 @@ namespace pandemic
 {
     class GeneSplicer : public Player
     {
-        private:
-
-        public: 
-        GeneSplicer(Board board, City city) : Player(board, city){};
+    public:
+        GeneSplicer(Board &board, City &city) : Player(board, city){};
+        Player &discover_cure(Color disease_color);
     };
 }
