@@ -1,0 +1,226 @@
+#include "Player.hpp"
+
+namespace pandemic
+{
+        // This is an utility function which checks if the player have five cards from the given color
+        bool Player::five_cards(Color color)
+        {
+                bool ans = false;
+                // clears the set
+                cards_in_color.clear();
+                // iterates through all the cards
+                for (const auto &card : cards)
+                {
+                        // found five cards from the same color
+                        if (cards_in_color.size() == 5)
+                        {
+                                ans = true;
+                                break;
+                        }
+                        // the card is in the given color
+                        if (cities_color.at(card) == color)
+                        {
+                                cards_in_color.insert(card);
+                        }
+                }
+                return ans;
+        }
+
+        // This is an utility function which discards five cards of the player from the given color
+        void Player::discard_five()
+        {
+                // iterates through all the five cards form the same color that have benn found
+                for (const auto &card : cards_in_color)
+                {
+                        // discards the card
+                        cards.erase(card);
+                }
+        }
+
+        // This function drives the player from the current city to the nearby city
+        Player &Player::drive(City nearby_city)
+        {
+                Board board;
+                // the cities are neighbours
+                if (board.get_city_neighbours().at(city).count(nearby_city) > 0)
+                {
+                        // updates the current city
+                        city = nearby_city;
+                }
+                else
+                {
+                        throw invalid_argument("[" + nearby_city + "] is not nearby [" + city + "]");
+                }
+                return *this;
+        }
+
+        // This funciton takes the player from the current city to the given city
+        Player &Player::fly_direct(City given_city)
+        {
+                if (cards.count(given_city) > 0)
+                {
+                        // updates the current city and discards the card
+                        city = given_city;
+                        cards.erase(given_city);
+                }
+                else
+                {
+                        throw invalid_argument("The player does not have the [" + given_city + "] card");
+                }
+                return *this;
+        }
+
+        // This funciton takes the player from the current city to any city in the board
+        Player &Player::fly_charter(City any_city)
+        {
+                // the player has the card of his current city
+                if (cards.count(city) > 0)
+                {
+                        // updates the current city and discards the card
+                        city = any_city;
+                        cards.erase(city);
+                }
+                else
+                {
+                        throw invalid_argument("The player does not have the [" + city + "] card");
+                }
+                return *this;
+        }
+
+        // This function takes the player to another city with a research station iff the current city has one
+        Player &Player::fly_shuttle(City research_city)
+        {
+                Board board;
+                // this current city has a research station
+                if (board.get_research_stations().count(city) > 0)
+                {
+                        // this given city has a research station
+                        if (board.get_research_stations().count(research_city) > 0)
+                        {
+                                // updates the current city and discards the card
+                                city = research_city;
+                                cards.erase(research_city);
+                        }
+                        else
+                        {
+                                throw invalid_argument("There is not any research station in [" + research_city + "] (dest)");
+                        }
+                }
+                else
+                {
+                        throw invalid_argument("There is not any research station in [" + city + "] (src)");
+                }
+                return *this;
+        }
+
+        // This function builds a research station in the current city
+        Player &Player::build()
+        {
+                // the player has the card of his current city
+                if (cards.count(city) > 0)
+                {
+                        Board board;
+                        // there is not any research station in the city
+                        if (board.get_research_stations().count(city) == 0)
+                        {
+                                // building a r.s and discards the card
+                                board.get_research_stations().insert(city);
+                                cards.erase(city);
+                        }
+                        else
+                        {
+                                throw invalid_argument("There is already a research station in [" + city + "]");
+                        }
+                }
+                else
+                {
+                        throw invalid_argument("The player does not have the [" + city + "] card");
+                }
+                return *this;
+        }
+
+        // This function discovers a cure for the disease according to the given color
+        Player &Player::discover_cure(Color disease_color)
+        {
+                Board board;
+                // this current city has a research station
+                if (board.get_research_stations().count(city) > 0)
+                {
+                        // No cure for the disease has been discovered yet
+                        if (board.get_cures().count(disease_color) == 0)
+                        {
+                                // the player has five cards in the color of the given disease
+                                if (five_cards(disease_color))
+                                {
+                                        // adds a cure to this given disease
+                                        board.get_cures().insert(disease_color);
+                                        // discard the five cards from the given color
+                                        discard_five();
+                                }
+                                else
+                                {
+                                        throw invalid_argument("The player does not have enough  [" + disease_color + "] cards");
+                                }
+                        }
+                }
+                else
+                {
+                        throw invalid_argument("There is not any research station in [" + city + "] (src)");
+                }
+                return *this;
+        }
+
+        // This function reduces the level of illness in the current city by one
+        Player &Player::treat(City city)
+        {
+                Board board;
+                // the given city is healty
+                if (board.get_illness_level().at(city) == 0)
+                {
+                        throw invalid_argument("The city [" + city + "] is healty");
+                }
+                else
+                {
+                        // founds the color of the given city
+                        Color city_color = cities_color.at(city);
+                        // the given city already has a cure
+                        if (board.get_cures().count(city_color) > 0)
+                        {
+                                // reduces the illness level in the given city to zero
+                                board.get_illness_level().at(city) = 0;
+                        }
+                        else
+                        {
+                                // reduces the illness level in the given city by one
+                                int illness_level = board.get_illness_level().at(city);
+                                board.get_illness_level().at(city) = illness_level - 1;
+                        }
+                }
+                return *this;
+        }
+
+        // This function adds the given card to this player
+        Player &Player::take_card(City city)
+        {
+                bool flag = false;
+                City card;
+                // a randomly selected card from a deck of 48 cards
+                auto it = cities_color.begin();
+                while (flag == false)
+                {
+                        advance(it, rand() % cities_color.size());
+                        card = it->first;
+                        // the player did not get that card already
+                        flag = (cards.count(card) == 0);
+                }
+                // adds this card
+                cards.insert(card);
+                return *this;
+        }
+
+        // This function remove all the cards of the player
+        void Player::remove_cards()
+        {
+                cards.clear();
+        }
+}
