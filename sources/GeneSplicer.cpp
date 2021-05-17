@@ -26,7 +26,7 @@ Player &Player::discover_cure(Color disease_color)
     }
     else
     {
-        throw invalid_argument("There is not any research station in [" + city + "] (src)");
+        throw invalid_argument("There is not any research station in [" + to_string(city) + "] (src)");
     }
     return *this;
 }

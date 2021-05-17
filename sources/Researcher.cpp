@@ -17,7 +17,7 @@ Player &Player::discover_cure(Color disease_color)
         }
         else
         {
-            throw invalid_argument("The player does not have enough  [" + disease_color + "] cards");
+            throw invalid_argument("The player does not have enough  [" + to_string(disease_color) + "] cards");
         }
     }
     return *this;

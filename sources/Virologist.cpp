@@ -7,7 +7,7 @@ Player &Player::treat(City c)
     // the given city is healty
     if (board.get_illness_level().at(c) == 0)
     {
-        throw invalid_argument("The city [" + c + "] is healty");
+        throw invalid_argument("The city [" + to_string(c) + "] is healty");
     }
     else
     {

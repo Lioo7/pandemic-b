@@ -69,7 +69,7 @@ namespace pandemic
                 }
                 else
                 {
-                        throw invalid_argument("[" + nearby_city + "] is not nearby [" + city + "]");
+                        throw invalid_argument("[" + to_string(nearby_city) + "] is not nearby [" + to_string(city) + "]");
                 }
                 return *this;
         }
@@ -85,7 +85,7 @@ namespace pandemic
                 }
                 else
                 {
-                        throw invalid_argument("The player does not have the [" + given_city + "] card");
+                        throw invalid_argument("The player does not have the [" + to_string(given_city) + "] card");
                 }
                 return *this;
         }
@@ -102,7 +102,7 @@ namespace pandemic
                 }
                 else
                 {
-                        throw invalid_argument("The player does not have the [" + city + "] card");
+                        throw invalid_argument("The player does not have the [" + to_string(city) + "] card");
                 }
                 return *this;
         }
@@ -123,12 +123,12 @@ namespace pandemic
                         }
                         else
                         {
-                                throw invalid_argument("There is not any research station in [" + research_city + "] (dest)");
+                                throw invalid_argument("There is not any research station in [" + to_string(research_city) + "] (dest)");
                         }
                 }
                 else
                 {
-                        throw invalid_argument("There is not any research station in [" + city + "] (src)");
+                        throw invalid_argument("There is not any research station in [" + to_string(city) + "] (src)");
                 }
                 return *this;
         }
@@ -149,12 +149,12 @@ namespace pandemic
                         }
                         else
                         {
-                                throw invalid_argument("There is already a research station in [" + city + "]");
+                                throw invalid_argument("There is already a research station in [" + to_string(city) + "]");
                         }
                 }
                 else
                 {
-                        throw invalid_argument("The player does not have the [" + city + "] card");
+                        throw invalid_argument("The player does not have the [" + to_string(city) + "] card");
                 }
                 return *this;
         }
@@ -179,13 +179,13 @@ namespace pandemic
                                 }
                                 else
                                 {
-                                        throw invalid_argument("The player does not have enough  [" + disease_color + "] cards");
+                                        throw invalid_argument("The player does not have enough  [" + to_string(disease_color) + "] cards");
                                 }
                         }
                 }
                 else
                 {
-                        throw invalid_argument("There is not any research station in [" + city + "] (src)");
+                        throw invalid_argument("There is not any research station in [" + to_string(city) + "] (src)");
                 }
                 return *this;
         }
@@ -195,13 +195,13 @@ namespace pandemic
         {
                 if (city != c)
                 {
-                        throw invalid_argument("Your card is[" + c + "], but you are at [" + city + "]");
+                        throw invalid_argument("Your card is[" + to_string(c) + "], but you are at [" + to_string(city) + "]");
                 }
                 Board board;
                 // the given city is healty
                 if (board.get_illness_level().at(city) == 0)
                 {
-                        throw invalid_argument("The city [" + city + "] is healty");
+                        throw invalid_argument("The city [" + to_string(city) + "] is healty");
                 }
                 else
                 {
