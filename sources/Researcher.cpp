@@ -1,9 +1,8 @@
 #include "Researcher.hpp"
 using namespace pandemic;
 
-Player &Player::discover_cure(Color disease_color)
+Player &Researcher::discover_cure(Color disease_color)
 {
-    Board board;
     // No cure for the disease has been discovered yet
     if (board.get_cures().count(disease_color) == 0)
     {

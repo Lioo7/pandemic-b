@@ -60,7 +60,6 @@ namespace pandemic
         // This function drives the player from the current city to the nearby city
         Player &Player::drive(City nearby_city)
         {
-                Board board;
                 // the cities are neighbours
                 if (board.get_city_neighbours().at(city).count(nearby_city) > 0)
                 {
@@ -110,7 +109,6 @@ namespace pandemic
         // This function takes the player to another city with a research station iff the current city has one
         Player &Player::fly_shuttle(City research_city)
         {
-                Board board;
                 // this current city has a research station
                 if (board.get_research_stations().count(city) > 0)
                 {
@@ -139,7 +137,6 @@ namespace pandemic
                 // the player has the card of his current city
                 if (cards.count(city) > 0)
                 {
-                        Board board;
                         // there is not any research station in the city
                         if (board.get_research_stations().count(city) == 0)
                         {
@@ -162,7 +159,6 @@ namespace pandemic
         // This function discovers a cure for the disease according to the given color
         Player &Player::discover_cure(Color disease_color)
         {
-                Board board;
                 // this current city has a research station
                 if (board.get_research_stations().count(city) > 0)
                 {
@@ -197,7 +193,6 @@ namespace pandemic
                 {
                         throw invalid_argument("Your card is[" + to_string(c) + "], but you are at [" + to_string(city) + "]");
                 }
-                Board board;
                 // the given city is healty
                 if (board.get_illness_level().at(city) == 0)
                 {
@@ -232,7 +227,7 @@ namespace pandemic
                 auto it = cities_color.begin();
                 while (flag == false)
                 {
-                        advance(it, rand() % cities_color.size());
+                        advance(it, (unsigned long)rand() % cities_color.size());
                         card = it->first;
                         // the player did not get that card already
                         flag = (cards.count(card) == 0);

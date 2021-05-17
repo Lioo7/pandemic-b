@@ -8,7 +8,7 @@ namespace pandemic
     class Player
     {
     protected:
-        Board board;
+        Board &board;
         City city;
         string player_role;
         unordered_set<City> cards;
@@ -21,9 +21,9 @@ namespace pandemic
         // This is an utility function which discards 'n' cards of the player from the given color
         void discard_cards();
 
-    public: // TODO: virtual and & in city
+    public: // TODO: virtual 
         // Constructor
-        Player(Board &board, City city, string role = "player_role") {}
+        Player(Board &board, City city, string player_role = "role") : board(board), city(city), player_role(player_role){}
         // This function drives the player from the current city to the nearby city
         virtual Player &drive(City nearby_city);
         // This funciton takes the player from the current city to the given city

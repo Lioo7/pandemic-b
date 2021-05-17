@@ -1,9 +1,8 @@
 #include "Virologist.hpp"
 using namespace pandemic;
 
-Player &Player::treat(City c)
+Player &Virologist::treat(City c)
 {
-    Board board;
     // the given city is healty
     if (board.get_illness_level().at(c) == 0)
     {

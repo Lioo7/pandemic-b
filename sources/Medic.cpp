@@ -1,9 +1,8 @@
 #include "Medic.hpp"
 using namespace pandemic;
 // TODO: what i hvae to do here?
-Player &Player::treat(City city)
+Player &Medic::treat(City city)
 {
-    Board board;
     // the given city is healty
     if (board.get_illness_level().at(city) == 0)
     {

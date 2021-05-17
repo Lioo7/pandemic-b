@@ -1,9 +1,8 @@
 #include "GeneSplicer.hpp"
 using namespace pandemic;
 
-Player &Player::discover_cure(Color disease_color)
+Player &GeneSplicer::discover_cure(Color disease_color)
 {
-    Board board;
     // this current city has a research station
     if (board.get_research_stations().count(city) > 0)
     {

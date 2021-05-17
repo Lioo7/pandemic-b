@@ -1,9 +1,8 @@
 #include "Scientist.hpp"
 using namespace pandemic;
 
-Player &Player::discover_cure(Color disease_color)
+Player &Scientist::discover_cure(Color disease_color)
 {
-        Board board;
         // this current city has a research station
         if (board.get_research_stations().count(city) > 0)
         {
@@ -11,7 +10,7 @@ Player &Player::discover_cure(Color disease_color)
                 if (board.get_cures().count(disease_color) == 0)
                 {
                         // the player has 'n' cards in the color of the given disease
-                        if (count_cards(disease_color, n))
+                        if (count_cards(disease_color, this->n))
                         {
                                 // adds a cure to this given disease
                                 board.get_cures().insert(disease_color);
