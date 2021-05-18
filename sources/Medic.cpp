@@ -1,6 +1,5 @@
 #include "Medic.hpp"
 using namespace pandemic;
-// TODO: what i hvae to do here?
 
 void Medic::auto_treat_check()
 {
@@ -51,12 +50,13 @@ Player &Medic::drive(City nearby_city)
     auto_treat_check();
     return *this;
 }
-Player &Medic::fly_direct(City given_city)
-{
-    Player::fly_direct(given_city);
-    auto_treat_check();
-    return *this;
-}
+// Player &Medic::fly_direct(City given_city)
+// {
+//     printf("Medic is flying direct!");
+//     Player::fly_direct(given_city);
+//     auto_treat_check();
+//     return *this;
+// }
 Player &Medic::fly_charter(City any_city)
 {
     Player::fly_charter(any_city);

@@ -15,6 +15,7 @@ Player &FieldDoctor::treat(City c)
         // checks if the card is equal to any of the nearby cities of the current city
         for (const City &current : board.get_city_neighbours().at(city))
         {
+            printf("FielDoctor makeing a treatment!");
             if (c == current)
             {
                 flag = false;

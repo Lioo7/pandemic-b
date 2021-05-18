@@ -12,7 +12,7 @@ namespace pandemic
     class Board
     {
     private:
-        map<City, unordered_set<City>> city_neighbours;
+        static map<City, unordered_set<City>> city_neighbours;
         map<City, int> illness_level;
         unordered_set<Color> cures;
         unordered_set<City> research_stations;
@@ -37,10 +37,25 @@ namespace pandemic
         {
             return research_stations;
         }
+        // Seters
+        // adding a new research station
+        void add_research_station(City c)
+        {
+            research_stations.insert(c);
+        }
+        // adding a new cure 
+        void add_cure(Color disease_color)
+        {
+            cures.insert(disease_color);
+        }
 
+        // This is an utility function which checks if there is a connection between the cities
+        bool are_neighbors(City &c1, City &c2)
+        {
+            return city_neighbours[c1].contains(c2);
+        }
         // This function gets city name and returns the level of illness in the city
-        int &
-        operator[](City city);
+        int &operator[](City city);
         // This funciton display the status of the board
         friend ostream &operator<<(ostream &output, Board &board);
         // This function returns true iff the board is clean(no illness cubes)
