@@ -13,13 +13,13 @@ Player &FieldDoctor::treat(City c)
     else
     {
         // checks if the card is equal to any of the nearby cities of the current city
-        // for (const City &current : board.get_city_neighbours().at(city))
-        // {
-        //     if (c == current)
-        //     {
-        //         flag = false;
-        //     }
-        // }
+        for (const City &current : board.get_city_neighbours().at(city))
+        {
+            if (c == current)
+            {
+                flag = false;
+            }
+        }
     }
     if (flag)
     {

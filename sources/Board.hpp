@@ -12,7 +12,7 @@ namespace pandemic
     class Board
     {
     private:
-        static map<City, unordered_set<City>> city_neighbours;
+        map<City, unordered_set<City>> city_neighbours;
         map<City, int> illness_level;
         unordered_set<Color> cures;
         unordered_set<City> research_stations;

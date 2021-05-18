@@ -37,11 +37,11 @@ namespace pandemic
         // This function discovers a cure for the disease according to the given color
         virtual Player &discover_cure(Color disease_color);
         // This function reduces the level of illness in the current city by one
-        virtual Player &treat(City city);
+        virtual Player &treat(City treat_city);
         // This function returns the role of the player
         string role() { return player_role; }
         // This function adds the given card to this player
-        Player &take_card(City city);
+        Player &take_card(City c);
         // This function remove all the cards of the player
         void remove_cards();
     };

@@ -187,53 +187,41 @@ namespace pandemic
         }
 
         // This function reduces the level of illness in the current city by one
-        Player &Player::treat(City c)
+        Player &Player::treat(City treat_city)
         {
-                if (city != c)
+                if (city != treat_city)
                 {
-                        throw invalid_argument("Your card is[" + to_string(c) + "], but you are at [" + to_string(city) + "]");
+                        throw invalid_argument("Your card is[" + to_string(treat_city) + "], but you are at [" + to_string(city) + "]");
                 }
                 // the given city is healty
-                if (board.get_illness_level().at(city) == 0)
+                if (board.get_illness_level().at(treat_city) == 0)
                 {
-                        throw invalid_argument("The city [" + to_string(city) + "] is healty");
+                        throw invalid_argument("The city [" + to_string(treat_city) + "] is healty");
                 }
                 else
                 {
                         // founds the color of the given city
-                        Color city_color = cities_color.at(city);
+                        Color city_color = cities_color.at(treat_city);
                         // the given city already has a cure
                         if (board.get_cures().count(city_color) > 0)
                         {
                                 // reduces the illness level in the given city to zero
-                                board.get_illness_level().at(city) = 0;
+                                board.get_illness_level().at(treat_city) = 0;
                         }
                         else
                         {
                                 // reduces the illness level in the given city by one
-                                int illness_level = board.get_illness_level().at(city);
-                                board.get_illness_level().at(city) = illness_level - 1;
+                                int illness_level = board.get_illness_level().at(treat_city);
+                                board.get_illness_level().at(treat_city) = illness_level - 1;
                         }
                 }
                 return *this;
         }
 
         // This function adds the given card to this player
-        Player &Player::take_card(City city)
+        Player &Player::take_card(City c)
         {
-                bool flag = false;
-                City card;
-                // a randomly selected card from a deck of 48 cards
-                auto it = cities_color.begin();
-                while (flag == false)
-                {
-                        advance(it, (unsigned long)rand() % cities_color.size());
-                        card = it->first;
-                        // the player did not get that card already
-                        flag = (cards.count(card) == 0);
-                }
-                // adds this card
-                cards.insert(card);
+                cards.insert(c);
                 return *this;
         }
 
