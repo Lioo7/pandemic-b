@@ -11,6 +11,6 @@ namespace pandemic
         Scientist(Board &board, City city, int num) : Player(board, city, "Scientist"){
             this->n = num;
         }
-        Player &discover_cure(Color disease_color);
+        Player &discover_cure(Color disease_color) override;
     };
 }

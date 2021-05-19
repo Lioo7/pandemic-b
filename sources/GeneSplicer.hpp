@@ -8,6 +8,6 @@ namespace pandemic
     {
     public:
         GeneSplicer(Board &board, City city) : Player(board, city, "GeneSplicer"){};
-        Player &discover_cure(Color disease_color);
+        Player &discover_cure(Color disease_color) override;
     };
 }

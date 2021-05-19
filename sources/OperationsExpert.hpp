@@ -8,6 +8,6 @@ namespace pandemic
     {
     public:
         OperationsExpert(Board &board, City city) : Player(board, city, "OperationsExpert"){};
-        Player &build();
+        Player &build() override;
     };
 }
