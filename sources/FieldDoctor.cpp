@@ -10,7 +10,7 @@ Player &FieldDoctor::treat(City c)
     {
         flag = true;
     }
-    else if (board.are_neighbors(c, city))
+    if (board.are_neighbors(c, city))
     {
         flag = true;
     }
@@ -37,23 +37,20 @@ Player &FieldDoctor::treat(City c)
     {
         throw invalid_argument("The city [" + get_city_name(city) + "] is healty");
     }
+    // founds the color of the given city
+    Color city_color = cities_color.at(c);
+    // the given city already has a cure
+    if (board.get_cures().count(city_color) > 0)
+    {
+        // printf("redcue illness to 0!\n");
+        // reduces the illness level in the given city to zero
+        board.set_illness_level(c, 0);
+    }
     else
     {
-        // founds the color of the given city
-        Color city_color = cities_color.at(c);
-        // the given city already has a cure
-        if (board.get_cures().count(city_color) > 0)
-        {
-            // printf("redcue illness to 0!\n");
-            // reduces the illness level in the given city to zero
-            board.set_illness_level(c, 0);
-        }
-        else
-        {
-            // reduces the illness level in the given city by one
-            int illness_level = board.get_illness_level().at(c);
-            board.set_illness_level(c, illness_level - 1);
-        }
+        // reduces the illness level in the given city by one
+        int illness_level = board.get_illness_level().at(c);
+        board.set_illness_level(c, illness_level - 1); 
     }
     return *this;
 }

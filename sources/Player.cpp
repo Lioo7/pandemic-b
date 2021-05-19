@@ -1,4 +1,5 @@
 #include "Player.hpp"
+const int cards_to_find = 5;
 
 namespace pandemic
 {
@@ -12,7 +13,7 @@ namespace pandemic
                         return true;
                 }
                 bool ans = false;
-                int count;
+                int count = 0;
                 // clears the set
                 cards_in_color.clear();
                 // iterates through all the cards
@@ -185,7 +186,6 @@ namespace pandemic
                                 // building a r.s and discards the card
                                 board.add_research_station(city);
                                 cards.erase(city);
-                                int temp = board.get_research_stations().count(city);
                         }
                 }
                 else
@@ -206,7 +206,7 @@ namespace pandemic
                         if (board.get_cures().count(disease_color) == 0)
                         {
                                 // the player has five cards in the color of the given disease
-                                if (count_cards(disease_color, 5))
+                                if (count_cards(disease_color, cards_to_find))
                                 {
                                         // printf("disease color: %d\n", disease_color);
                                         // adds a cure to this given disease
@@ -240,26 +240,22 @@ namespace pandemic
                 {
                         throw invalid_argument("The city [" + get_city_name(treat_city) + "] is healty");
                 }
+
+                // founds the color of the given city
+                Color city_color = cities_color.at(treat_city);
+                // if the given city already has a cure
+                if (board.get_cures().count(city_color) > 0)
+                {
+                        // reduces the illness level in the given city to zero
+                        board.set_illness_level(treat_city, 0);
+                }
                 else
                 {
-                        // founds the color of the given city
-                        Color city_color = cities_color.at(treat_city);
-                        int temp = board.get_cures().count(city_color);
-                        // printf("city color: %d\n", city_color);
-                        // printf("cures has been found 0/1: %d\n", temp);
-                        // if the given city already has a cure
-                        if (board.get_cures().count(city_color) > 0)
-                        {
-                                // reduces the illness level in the given city to zero
-                                board.set_illness_level(treat_city, 0);
-                        }
-                        else
-                        {
-                                // reduces the illness level in the given city by one
-                                int illness_level = board.get_illness_level().at(treat_city);
-                                board.set_illness_level(treat_city, illness_level - 1);
-                        }
+                        // reduces the illness level in the given city by one
+                        int illness_level = board.get_illness_level().at(treat_city);
+                        board.set_illness_level(treat_city, illness_level - 1);
                 }
+
                 return *this;
         }
 

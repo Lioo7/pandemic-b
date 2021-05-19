@@ -1,5 +1,6 @@
 #include "GeneSplicer.hpp"
 using namespace pandemic;
+const int cards_to_find = 5;
 
 Player &GeneSplicer::discover_cure(Color disease_color)
 {
@@ -10,7 +11,7 @@ Player &GeneSplicer::discover_cure(Color disease_color)
         if (board.get_cures().count(disease_color) == 0)
         {
             // the player has five cards in the color of the given disease
-            if (count_cards(5))
+            if (count_cards(cards_to_find))
             {
                 // adds a cure to this given disease
                 board.add_cure(disease_color);
