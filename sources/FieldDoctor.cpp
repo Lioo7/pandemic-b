@@ -18,12 +18,10 @@ Player &FieldDoctor::treat(City c)
     else
     {
         // checks if the card is equal to any of the nearby cities of the current city
-        for (City nei : board.get_city_neighbours().at(city))
+
+        if (board.are_neighbors(c, city))
         {
-            if (board.are_neighbors(c, nei))
-            {
-                flag = true;
-            }
+            flag = true;
         }
     }
 
@@ -50,7 +48,7 @@ Player &FieldDoctor::treat(City c)
     {
         // reduces the illness level in the given city by one
         int illness_level = board.get_illness_level().at(c);
-        board.set_illness_level(c, illness_level - 1); 
+        board.set_illness_level(c, illness_level - 1);
     }
     return *this;
 }
