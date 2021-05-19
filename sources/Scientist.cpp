@@ -13,7 +13,7 @@ Player &Scientist::discover_cure(Color disease_color)
                         if (count_cards(disease_color, this->n))
                         {
                                 // adds a cure to this given disease
-                                board.get_cures().insert(disease_color);
+                                board.add_cure(disease_color);
                                 // discard the five cards from the given color
                                 discard_cards();
                         }

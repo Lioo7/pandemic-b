@@ -39,13 +39,13 @@ namespace pandemic
                 // iterates through all the cards
                 for (const auto &card : cards)
                 {
-                        // found five cards
-                        if (cards_in_color.size() == num_of_cards)
+                        cards_in_color.insert(card);
+                        // found 'n' cards
+                        if (cards_in_color.size() >= num_of_cards)
                         {
                                 ans = true;
                                 break;
                         }
-                        cards_in_color.insert(card);
                 }
                 return ans;
         }
@@ -115,17 +115,19 @@ namespace pandemic
         // This funciton takes the player from the current city to any city in the board
         Player &Player::fly_charter(City any_city)
         {
+                printf("flying charter!\n");
+                printf("From %s to %s\n", get_city_name(city).c_str(), get_city_name(any_city).c_str());
                 if (is_same_city(any_city))
                 {
                         throw invalid_argument("The player already at" + get_city_name(city) + "]!");
                 }
-                printf("flying charter!\n");
                 // the player has the card of his current city
                 if (cards.count(city) > 0)
                 {
                         // updates the current city and discards the card
-                        city = any_city;
                         cards.erase(city);
+                        city = any_city;
+                        printf("erase %s\n", get_city_name(city).c_str());
                 }
                 else
                 {
@@ -203,7 +205,7 @@ namespace pandemic
                                 // the player has five cards in the color of the given disease
                                 if (count_cards(disease_color, 5))
                                 {
-                                        printf("have 5 cards!");
+                                        printf("disease color: %d\n", disease_color);
                                         // adds a cure to this given disease
                                         board.add_cure(disease_color);
                                         // discard the five cards from the given color
@@ -211,7 +213,6 @@ namespace pandemic
                                 }
                                 else
                                 {
-                                        printf("does not have 5 cards!");
                                         throw invalid_argument("The player does not have enough  [" + to_string(disease_color) + "] cards");
                                 }
                         }
@@ -240,17 +241,22 @@ namespace pandemic
                 {
                         // founds the color of the given city
                         Color city_color = cities_color.at(treat_city);
-                        // the given city already has a cure
+                        int temp = board.get_cures().count(city_color);
+                        printf("city color: %d\n", city_color);
+                        printf("cures has been found 0/1: %d\n", temp);
+                        // if the given city already has a cure
                         if (board.get_cures().count(city_color) > 0)
                         {
+                                printf("resucing the inllness level to 0\n");
                                 // reduces the illness level in the given city to zero
-                                board.get_illness_level().at(treat_city) = 0;
+                                board.set_illness_level(treat_city, 0);
                         }
                         else
                         {
                                 // reduces the illness level in the given city by one
                                 int illness_level = board.get_illness_level().at(treat_city);
-                                board.get_illness_level().at(treat_city) = illness_level - 1;
+                                board.set_illness_level(treat_city, illness_level - 1);
+                                printf("new illness level: %d\n", illness_level - 1);
                         }
                 }
                 return *this;

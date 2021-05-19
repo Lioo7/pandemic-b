@@ -43,10 +43,15 @@ namespace pandemic
         {
             research_stations.insert(c);
         }
-        // adding a new cure 
+        // adding a new cure
         void add_cure(Color disease_color)
         {
             cures.insert(disease_color);
+        }
+        // set illness level
+        void set_illness_level(City treat_city, int new_level)
+        {
+            illness_level.at(treat_city) = new_level;
         }
 
         // This is an utility function which checks if there is a connection between the cities

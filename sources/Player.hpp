@@ -28,13 +28,13 @@ namespace pandemic
         // Constructor
         Player(Board &board, City city, string player_role = "role") : board(board), city(city), player_role(player_role) {}
         // This function drives the player from the current city to the nearby city
-        virtual Player &drive(City nearby_city);
+        Player &drive(City nearby_city);
         // This funciton takes the player from the current city to the given city
         virtual Player &fly_direct(City given_city);
         // This funciton takes the player from the current city to any city in the board
-        virtual Player &fly_charter(City any_city);
+        Player &fly_charter(City any_city);
         // This function takes the player to another city with a research station iff the current city has one
-        virtual Player &fly_shuttle(City research_city);
+        Player &fly_shuttle(City research_city);
         // This function builds a research station in the current city
         virtual Player &build();
         // This function discovers a cure for the disease according to the given color

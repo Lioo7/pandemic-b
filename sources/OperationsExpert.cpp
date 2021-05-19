@@ -4,6 +4,6 @@ using namespace pandemic;
 Player &OperationsExpert::build()
 {
     // building a research station
-    board.get_research_stations().insert(city);
+    board.add_research_station(city);
     return *this;
 }
