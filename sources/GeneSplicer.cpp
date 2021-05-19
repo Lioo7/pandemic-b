@@ -12,7 +12,6 @@ Player &GeneSplicer::discover_cure(Color disease_color)
             // the player has five cards in the color of the given disease
             if (count_cards(5))
             {
-                printf("disease_color(res): %d\n", disease_color);
                 // adds a cure to this given disease
                 board.add_cure(disease_color);
                 // discard the five cards from the given color

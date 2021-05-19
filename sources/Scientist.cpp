@@ -3,14 +3,13 @@ using namespace pandemic;
 
 Player &Scientist::discover_cure(Color disease_color)
 {
-        printf("Scien is discovring\n");
+        // printf("Scien is discovring\n");
         // this current city has a research station
         if (board.get_research_stations().count(city) > 0)
         {
                 // No cure for the disease has been discovered yet
                 if (board.get_cures().count(disease_color) == 0)
                 {
-                        printf("n = %d\n", n);
                         // the player has 'n' cards in the color of the given disease
                         if (count_cards(disease_color, this->n))
                         {

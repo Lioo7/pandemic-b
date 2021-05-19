@@ -23,7 +23,7 @@ namespace pandemic
         // This is an utility function which checks if the player is trying to move to his current city
         bool is_same_city(City c);
 
-    public: // TODO: virtual
+    public: 
         // Constructor
         Player(Board &board, City city, string player_role = "role") : board(board), city(city), player_role(player_role) {}
         // This function drives the player from the current city to the nearby city

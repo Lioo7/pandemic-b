@@ -1,11 +1,12 @@
 #include "Player.hpp"
 
 namespace pandemic
-{ // TODO: fix space
+{
+        //========================================Utility-Functions================================================
+
         // This is an utility function which checks if the player have 'n' cards from the given color
         bool Player::count_cards(Color color, int num_of_cards)
         {
-                printf("count_cards_1!\n");
                 if (num_of_cards == 0)
                 {
                         return true;
@@ -20,7 +21,6 @@ namespace pandemic
                         // the card is in the given color
                         if (cities_color.at(card) == color)
                         {
-                                printf("count");
                                 cards_in_color.insert(card);
                         }
                         // found five cards from the same color
@@ -37,7 +37,6 @@ namespace pandemic
         // This is an utility function which checks if the player have 'n' cards
         bool Player::count_cards(int num_of_cards)
         {
-                printf("count_cards_2!\n");
                 if (num_of_cards == 0)
                 {
                         return true;
@@ -62,7 +61,6 @@ namespace pandemic
         // This is an utility function which discards 'n' cards of the player from the given color
         void Player::discard_cards()
         {
-                printf("discard_cards!\n");
                 // iterates through all the 'n' cards form the same color that have benn found
                 for (const auto &card : cards_in_color)
                 {
@@ -77,6 +75,8 @@ namespace pandemic
                 return city == c;
         }
 
+        //========================================Main-Functions================================================
+
         // This function drives the player from the current city to the nearby city
         Player &Player::drive(City nearby_city)
         {
@@ -84,7 +84,7 @@ namespace pandemic
                 {
                         throw invalid_argument("The player already at" + get_city_name(city) + "]!");
                 }
-                printf("driving!\n");
+                // printf("driving!\n");
                 // the cities are neighbours
                 if (board.are_neighbors(city, nearby_city))
                 {
@@ -105,17 +105,15 @@ namespace pandemic
                 {
                         throw invalid_argument("The player already at" + get_city_name(city) + "]!");
                 }
-                printf("flying direct!\n");
+                // printf("flying direct!\n");
                 if (cards.contains(given_city))
                 {
-                        printf("contains\n");
                         // updates the current city and discards the card
                         cards.erase(given_city);
                         city = given_city;
                 }
                 else
                 {
-                        printf("does not contain\n");
                         throw invalid_argument("The player does not have the [" + get_city_name(given_city) + "] card");
                 }
                 return *this;
@@ -124,8 +122,8 @@ namespace pandemic
         // This funciton takes the player from the current city to any city in the board
         Player &Player::fly_charter(City any_city)
         {
-                printf("flying charter!\n");
-                printf("From %s to %s\n", get_city_name(city).c_str(), get_city_name(any_city).c_str());
+                // printf("flying charter!\n");
+                // printf("From %s to %s\n", get_city_name(city).c_str(), get_city_name(any_city).c_str());
                 if (is_same_city(any_city))
                 {
                         throw invalid_argument("The player already at" + get_city_name(city) + "]!");
@@ -136,7 +134,7 @@ namespace pandemic
                         // updates the current city and discards the card
                         cards.erase(city);
                         city = any_city;
-                        printf("erase %s\n", get_city_name(city).c_str());
+                        // printf("erase %s\n", get_city_name(city).c_str());
                 }
                 else
                 {
@@ -177,7 +175,7 @@ namespace pandemic
         // This function builds a research station in the current city
         Player &Player::build()
         {
-                printf("building!\n");
+                // printf("building!\n");
                 // the player has the card of his current city
                 if (cards.count(city) > 0)
                 {
@@ -189,10 +187,6 @@ namespace pandemic
                                 cards.erase(city);
                                 int temp = board.get_research_stations().count(city);
                         }
-                        // else
-                        // {
-                        //         throw invalid_argument("There is already a research station in [" + get_city_name(city) + "]");
-                        // }
                 }
                 else
                 {
@@ -204,7 +198,7 @@ namespace pandemic
         // This function discovers a cure for the disease according to the given color
         Player &Player::discover_cure(Color disease_color)
         {
-                printf("discover_cure!\n");
+                // printf("discover_cure!\n");
                 // this current city has a research station
                 if (board.get_research_stations().count(city) > 0)
                 {
@@ -214,7 +208,7 @@ namespace pandemic
                                 // the player has five cards in the color of the given disease
                                 if (count_cards(disease_color, 5))
                                 {
-                                        printf("disease color: %d\n", disease_color);
+                                        // printf("disease color: %d\n", disease_color);
                                         // adds a cure to this given disease
                                         board.add_cure(disease_color);
                                         // discard the five cards from the given color
@@ -236,7 +230,7 @@ namespace pandemic
         // This function reduces the level of illness in the current city by one
         Player &Player::treat(City treat_city)
         {
-                printf("treating!\n");
+                // printf("treating!\n");
                 if (city != treat_city)
                 {
                         throw invalid_argument("Your card is[" + get_city_name(treat_city) + "], but you are at [" + get_city_name(city) + "]");
@@ -251,12 +245,11 @@ namespace pandemic
                         // founds the color of the given city
                         Color city_color = cities_color.at(treat_city);
                         int temp = board.get_cures().count(city_color);
-                        printf("city color: %d\n", city_color);
-                        printf("cures has been found 0/1: %d\n", temp);
+                        // printf("city color: %d\n", city_color);
+                        // printf("cures has been found 0/1: %d\n", temp);
                         // if the given city already has a cure
                         if (board.get_cures().count(city_color) > 0)
                         {
-                                printf("resucing the inllness level to 0\n");
                                 // reduces the illness level in the given city to zero
                                 board.set_illness_level(treat_city, 0);
                         }
@@ -265,7 +258,6 @@ namespace pandemic
                                 // reduces the illness level in the given city by one
                                 int illness_level = board.get_illness_level().at(treat_city);
                                 board.set_illness_level(treat_city, illness_level - 1);
-                                printf("new illness level: %d\n", illness_level - 1);
                         }
                 }
                 return *this;
@@ -274,7 +266,7 @@ namespace pandemic
         // This function adds the given card to this player
         Player &Player::take_card(City c)
         {
-                printf("taking a card!\n");
+                // printf("taking a card!\n");
                 cards.insert(c);
                 return *this;
         }
@@ -282,7 +274,6 @@ namespace pandemic
         // This function remove all the cards of the player
         void Player::remove_cards()
         {
-                printf("removing the cards!\n");
                 cards.clear();
         }
 }

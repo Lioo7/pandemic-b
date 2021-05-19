@@ -64,6 +64,7 @@ namespace pandemic
     research_stations.clear();
   }
 
+  // adds all the cities to the map
   map<City, unordered_set<City>> Board::city_neighbours{
       {Algiers, {Madrid, Paris, Istanbul, Cairo}},
       {Atlanta, {Chicago, Miami, Washington}},

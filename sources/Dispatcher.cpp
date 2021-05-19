@@ -3,7 +3,7 @@ using namespace pandemic;
 
 Player &Dispatcher::fly_direct(City given_city)
 {
-    printf("Dispatcher is flying direct!\n");
+    // printf("Dispatcher is flying direct!\n");
     if (is_same_city(given_city))
     {
         throw invalid_argument("The player already at" + get_city_name(city) + "]!");
