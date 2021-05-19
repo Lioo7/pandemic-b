@@ -22,7 +22,6 @@ namespace pandemic
         void discard_cards();
         // This is an utility function which checks if the player is trying to move to his current city
         bool is_same_city(City c);
-        // This is an utility function which checks if the player is trying to move to his current city
 
     public: // TODO: virtual
         // Constructor

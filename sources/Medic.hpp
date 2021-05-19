@@ -7,7 +7,7 @@ namespace pandemic
     class Medic : public Player
     {
     public:
-        Medic(Board &board, City city) : Player(board, city){};
+        Medic(Board &board, City city) : Player(board, city, "Medic"){};
         Player &drive(City nearby_city);
         Player &fly_direct(City given_city);
         Player &fly_charter(City any_city);

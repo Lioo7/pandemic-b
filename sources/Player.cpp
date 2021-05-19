@@ -6,6 +6,10 @@ namespace pandemic
         bool Player::count_cards(Color color, int num_of_cards)
         {
                 printf("count_cards_1!\n");
+                if (num_of_cards == 0)
+                {
+                        return true;
+                }
                 bool ans = false;
                 int count;
                 // clears the set
@@ -16,6 +20,7 @@ namespace pandemic
                         // the card is in the given color
                         if (cities_color.at(card) == color)
                         {
+                                printf("count");
                                 cards_in_color.insert(card);
                         }
                         // found five cards from the same color
@@ -33,6 +38,10 @@ namespace pandemic
         bool Player::count_cards(int num_of_cards)
         {
                 printf("count_cards_2!\n");
+                if (num_of_cards == 0)
+                {
+                        return true;
+                }
                 bool ans = false;
                 // clears the set
                 cards_in_color.clear();
@@ -101,8 +110,8 @@ namespace pandemic
                 {
                         printf("contains\n");
                         // updates the current city and discards the card
-                        city = given_city;
                         cards.erase(given_city);
+                        city = given_city;
                 }
                 else
                 {
@@ -150,8 +159,8 @@ namespace pandemic
                         if (board.get_research_stations().count(research_city) > 0)
                         {
                                 // updates the current city and discards the card
-                                city = research_city;
                                 cards.erase(research_city);
+                                city = research_city;
                         }
                         else
                         {
@@ -180,10 +189,10 @@ namespace pandemic
                                 cards.erase(city);
                                 int temp = board.get_research_stations().count(city);
                         }
-                        else
-                        {
-                                throw invalid_argument("There is already a research station in [" + get_city_name(city) + "]");
-                        }
+                        // else
+                        // {
+                        //         throw invalid_argument("There is already a research station in [" + get_city_name(city) + "]");
+                        // }
                 }
                 else
                 {

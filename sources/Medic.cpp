@@ -3,18 +3,14 @@ using namespace pandemic;
 
 void Medic::auto_treat_check()
 {
-    // if the city is not healty
-    if (board.get_illness_level().at(city) != 0)
+    // founds the color of the current city
+    Color city_color = cities_color.at(city);
+    printf("auto: city color(med): %d\n", city_color);
+    // the given city already has a cure
+    if (board.get_cures().count(city_color) > 0)
     {
-        // founds the color of the current city
-        Color city_color = cities_color.at(city);
-        printf("city color(med): %d\n", city_color);
-        // the given city already has a cure
-        if (board.get_cures().count(city_color) > 0)
-        {
-            // reduces the illness level in the given city to zero
-            board.set_illness_level(city, 0);
-        }
+        // reduces the illness level in the given city to zero
+        board.set_illness_level(city, 0);
     }
 }
 
@@ -57,8 +53,23 @@ Player &Medic::drive(City nearby_city)
 }
 Player &Medic::fly_direct(City given_city) // TODO ?
 {
-    printf("Medic is flying direct!");
-    Player::fly_direct(given_city);
+    printf("Medic is flying direct\n");
+    if (is_same_city(given_city))
+    {
+        throw invalid_argument("The player already at" + get_city_name(city) + "]!");
+    }
+    if (cards.contains(given_city))
+    {
+        printf("contains\n");
+        // updates the current city and discards the card
+        cards.erase(given_city);
+        city = given_city;
+    }
+    else
+    {
+        printf("does not contain\n");
+        throw invalid_argument("The player does not have the [" + get_city_name(given_city) + "] card");
+    }
     auto_treat_check();
     return *this;
 }
